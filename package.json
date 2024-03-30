@@ -1,0 +1,28 @@
+{
+  "name": "elgo-iot-datastream-app",
+  "version": "1.0.0",
+  "description": "An EC2 instance to stream data to Vercel backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElgoElectric/elgo-iot-datastream-app.git"
+  },
+  "author": "Visshal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElgoElectric/elgo-iot-datastream-app/issues"
+  },
+  "homepage": "https://github.com/ElgoElectric/elgo-iot-datastream-app#readme",
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.2.13",
+    "aws-sdk": "^2.1589.0",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  }
+}
