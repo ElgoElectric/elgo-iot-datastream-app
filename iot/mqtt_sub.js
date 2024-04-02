@@ -48,15 +48,22 @@ async function initializeIoTDevice() {
     host: "atdrbdfrzmr3g-ats.iot.us-east-1.amazonaws.com",
   });
 
-  const topic = "elgo/v1/refrigerator/power";
+  const topics = [
+    "elgo/v1/kitchenappliance1/power",
+    "elgo/v1/kitchenappliance2/power",
+    "elgo/v1/refrigerator/power",
+    "elgo/v1/HVAC/power",
+    "elgo/v1/lighting/power",
+  ]; // Add topics to this array
   console.log("Trying to Connect....");
 
   device.on("connect", function () {
     console.log("Connected to AWS IoT");
-    device.subscribe(topic);
-    console.log(`Subscribed to ${topic}`);
+    topics.forEach((topic) => {
+      device.subscribe(topic);
+      console.log(`Subscribed to ${topic}`);
+    });
   });
-
   // Handle message event
   device.on("message", async function (topic, payload) {
     console.log("Message received:", topic, payload.toString());

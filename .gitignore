@@ -1,3 +1,5 @@
 node_modules
 .env
 .vscode
+elgoiotinstance_key.pem
+/iot/device_certs
