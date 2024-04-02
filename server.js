@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const { initializeIoTDevice } = require("./iot/mqtt_sub.js");
+const PORT = 3000;
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -35,9 +36,8 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on ${PORT}`);
 });
 
 // Export the server for Vercel
