@@ -4,48 +4,17 @@ const AWS = require("aws-sdk");
 require("dotenv").config();
 const axios = require("axios"); // Use axios instead of node-fetch
 
-// Configure AWS SDK
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
-
-const s3 = new AWS.S3();
-
-// Function to download a file from S3
-async function downloadFromS3(bucket, key) {
-  const params = {
-    Bucket: bucket,
-    Key: key,
-  };
-  const data = await s3.getObject(params).promise();
-  return data.Body.toString("utf-8");
-}
-
 async function initializeIoTDevice() {
-  const bucketName = "awscertstorage";
-  // Paths to your certificates in S3
-  const privateKeyPath =
-    "device_certs_new/a67d13b1b7436d1540c6be5ac27f0142e74d8119181511bda3faf9d0e141acbd-private.pem.key";
-  const certificatePath =
-    "device_certs_new/a67d13b1b7436d1540c6be5ac27f0142e74d8119181511bda3faf9d0e141acbd-certificate.pem.crt";
-  const caPath = "device_certs_new/AmazonRootCA1.pem";
-
-  // Download certificates
-  const [privateKey, certificate, caCertificate] = await Promise.all([
-    downloadFromS3(bucketName, privateKeyPath),
-    downloadFromS3(bucketName, certificatePath),
-    downloadFromS3(bucketName, caPath),
-  ]);
-
   // Initialize AWS IoT device connection
-  const device = awsIot.device({
-    privateKey: Buffer.from(privateKey),
-    clientCert: Buffer.from(certificate),
-    caCert: Buffer.from(caCertificate),
-    clientId: process.env.AWS_IOT_CLIENT_ID,
-    host: "atdrbdfrzmr3g-ats.iot.us-east-1.amazonaws.com",
+  device = awsIot.device({
+    keyPath:
+      "/Users/visshal/Elgo/Repositories/elgo-iot-datastream-app/iot/device_certs/035f080b642abfd092baf164202f09e1967d1d7189fc3aca1b1d84bee86662e8-private.pem.key",
+    certPath:
+      "/Users/visshal/Elgo/Repositories/elgo-iot-datastream-app/iot/device_certs/035f080b642abfd092baf164202f09e1967d1d7189fc3aca1b1d84bee86662e8-certificate.pem.crt",
+    caPath:
+      "/Users/visshal/Elgo/Repositories/elgo-iot-datastream-app/iot/device_certs/AmazonRootCA1.pem",
+    clientId: "iotconsole-elgo-client-02",
+    host: "a1smcl0622itjw-ats.iot.us-east-1.amazonaws.com",
   });
 
   const topics = [
